@@ -29,7 +29,8 @@ def process_open_ai():
     except Exception as e:
         print(e)
         set_checkpoint(CHECKPOINT) # if something goes wrong update checkpoint to avoid duplicate tweets
-    set_checkpoint(CHECKPOINT)
+    if entry:
+        set_checkpoint(CHECKPOINT)
 
 def main():
     process_open_ai()
