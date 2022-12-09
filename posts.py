@@ -32,7 +32,8 @@ def create_trimmed_entries(feed):
 
 def fetch_open_ai_feed(last_processed_date_string=None):
     url = "https://openai.com/blog/rss/"
-    last_processed_date = parse(last_processed_date_string)
+    if last_processed_date_string:
+        last_processed_date = parse(last_processed_date_string)
     open_ai_feed = FeedParser(url)
     feed = open_ai_feed.fetch(last_processed_date)
     # ['title', 'title_detail', 'summary', 'summary_detail', 'links', 'link', 'id', \
@@ -43,7 +44,8 @@ def fetch_open_ai_feed(last_processed_date_string=None):
 
 def fetch_deepmind_feed(last_processed_date_string=None):
     url = "https://www.deepmind.com/blog/rss.xml"
-    last_processed_date = parse(last_processed_date_string)
+    if last_processed_date_string:
+        last_processed_date = parse(last_processed_date_string)
     deep_mind_feed = FeedParser(url)
     feed = deep_mind_feed.fetch(last_processed_date)
     # ['title', 'title_detail', 'summary', 'summary_detail', 'links', 'link', 'id', \

@@ -32,7 +32,8 @@ def process_open_ai():
     except Exception as e:
         print(e)
         set_checkpoint(CHECKPOINT) # if something goes wrong update checkpoint to avoid duplicate tweets
-    if entry:
+    if feed:
+        # if feed then only set checkpoint
         set_checkpoint(CHECKPOINT)
 
 def process_deepmind():
@@ -40,7 +41,7 @@ def process_deepmind():
     platform = 'deepmind'
     last_processed_date_string = CHECKPOINT.get(platform)
     print(f"{platform} - Last processed date for {platform}: {last_processed_date_string}")
-    feed = fetch_open_ai_feed(last_processed_date_string)
+    feed = fetch_deepmind_feed(last_processed_date_string)
     print(f"{platform} - Found {len(feed)} new blog posts")
     try:
         for entry in feed:
