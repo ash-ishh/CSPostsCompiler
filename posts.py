@@ -3,7 +3,7 @@ import re
 
 from dateutil.parser import parse
 from bs4 import BeautifulSoup
-from utils import get_checkpoint
+from utils import get_checkpoint, set_checkpoint
 
 from twitter import Twitter
 
@@ -32,7 +32,8 @@ class Platform:
         self.trimmed_feed = list()
         self.rss_feed_url_mapping = {
             'openai': 'https://openai.com/blog/rss/',
-            'deepmind': 'https://www.deepmind.com/blog/rss.xml'
+            'deepmind': 'https://www.deepmind.com/blog/rss.xml',
+            'netflix': 'https://netflixtechblog.com/feed'
         }
 
     def set_trimmed_feed(self):
@@ -54,7 +55,9 @@ class Platform:
                        'guidislink', 'tags', 'authors', 'author', 'author_detail', 'published', \
                        'published_parsed', 'media_content', 'content'],
             'deepmind': ['title', 'title_detail', 'summary', 'summary_detail', 'links', 'link', 'id', \
-                         'guidislink', 'published', 'published_parsed', 'media_content', 'media_thumbnail', 'href']
+                         'guidislink', 'published', 'published_parsed', 'media_content', 'media_thumbnail', 'href'],
+            'netflix': ['title', 'title_detail', 'links', 'link', 'id', 'guidislink', 'tags', 'authors', 'author', \
+                        'author_detail', 'published', 'published_parsed', 'updated', 'updated_parsed', 'content', 'summary']
         }
         required_fields = ['title', 'summary', 'link', 'published']
  
@@ -71,7 +74,7 @@ class Platform:
  
     def format_entry(self, entry):
         link = entry['link'].strip()
-        summary = entry['summary'].strip()
+        summary = entry['summary'].strip().capitalize()
         summary = re.sub(r'\n+', '\n',summary)
         available_chars = 280 - len(link)
         #TODO: Check twitter link char count
@@ -93,7 +96,7 @@ class Platform:
             # if last_processed_date_string is directly given no need to get it from checkpoint
             print("Setting: last_process_date_string")
             self.last_processed_date_string = self.checkpoint.get(self.name)
-        print(f"{self.name} - Last processed date: {self.last_processed_date_string}")
+        print(f"Info: Last processed date - {self.last_processed_date_string}")
         self.fetch_and_set_trimmed_feed(self.last_processed_date_string)
         print(f"{self.name} - Found {len(self.trimmed_feed)} new blog posts")
         try:
@@ -102,10 +105,11 @@ class Platform:
                 print(f"Sending to twitter: - {tweet}")
                 self.twitter.update_status(tweet)
                 if self.checkpoint:
-                    self.checkpoint[platform] = entry['published']
+                    self.checkpoint[self.name] = entry['published']
         except Exception as e:
             print(e)
             if self.checkpoint:
+                print("Setting checkpoint in case of exception")
                 set_checkpoint(self.checkpoint) # if something goes wrong update checkpoint to avoid duplicate tweets
         if self.trimmed_feed and self.checkpoint:
             # if feed then only set checkpoint
