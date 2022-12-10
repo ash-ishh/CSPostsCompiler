@@ -24,4 +24,4 @@ class Twitter:
         if TESTING_MODE.lower() == 'false':
             self.client.create_tweet(text=tweet)
         else:
-            print(f"Testing mode on: {tweet}")
+            print(f"Testing mode on, not posting.")

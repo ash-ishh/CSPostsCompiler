@@ -4,10 +4,9 @@ from utils import get_checkpoint
 
 def main():
     checkpoint = get_checkpoint()
-    platforms = ['openai', 'deepmind']
+    platforms = ['openai', 'deepmind', 'netflix']
     for platform in platforms:
         try:
-            print(f"Processing {platform}")
             platform_instance = Platform(platform, checkpoint)
             platform_instance.process()
         except Exception as e:

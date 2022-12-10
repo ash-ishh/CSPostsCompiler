@@ -42,7 +42,11 @@ class Platform:
             trimmed_entry = {}
             trimmed_entry['title'] = entry.title
             summary_soup = BeautifulSoup(entry.summary, 'html.parser')
-            summary = summary_soup.get_text()
+            if summary_soup.find():
+                summary_ps = summary_soup.find_all('p')
+                summary = '\n'.join([summary_p.get_text() for summary_p in summary_ps ])
+            else:
+                summary = entry.summary
             trimmed_entry['summary'] = summary
             trimmed_entry['link'] = entry.link
             trimmed_entry['published'] = entry.published
@@ -74,14 +78,20 @@ class Platform:
  
     def format_entry(self, entry):
         link = entry['link'].strip()
-        summary = entry['summary'].strip().capitalize()
+        summary = entry['summary'].strip()
+        """
+        #TODO: Improve summary
         summary = re.sub(r'\n+', '\n',summary)
-        available_chars = 280 - len(link)
+        available_chars = 280 - 2 - len(link)
         #TODO: Check twitter link char count
         if len(summary) > available_chars:
-            summary = f"{summary[:available_chars-3]}.."
+            summary = f'"{summary[:available_chars-5]}.."'
+        else:
+            summary = f'"{summary}"'
         text = f"{summary}\n{link}"
         print(f"Final tweet size: {len(text)}")
+        """
+        text = link
         return text
 
     def process(self):
