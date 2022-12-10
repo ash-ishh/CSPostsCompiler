@@ -5,8 +5,10 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
+
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 CHECKPOINT_FILE_NAME = os.getenv("CHECKPOINT_FILE_NAME")
+TESTING_MODE = os.getenv("TESTING_MODE")
 
 if not S3_BUCKET_NAME:
     print("Populate .env with S3_BUCKET_NAME")
@@ -26,9 +28,12 @@ def get_checkpoint():
     return checkpoint_object
 
 def set_checkpoint(checkpoint_object):
-    s3_client = boto3.client("s3")
-    s3_client.put_object(
-        Body=json.dumps(checkpoint_object),
-        Bucket=S3_BUCKET_NAME,
-        Key=CHECKPOINT_FILE_NAME
-    )
+    if TESTING_MODE.lower() == 'false':
+        s3_client = boto3.client("s3")
+        s3_client.put_object(
+            Body=json.dumps(checkpoint_object),
+            Bucket=S3_BUCKET_NAME,
+            Key=CHECKPOINT_FILE_NAME
+        )
+    else:
+        print(f"Testing mode on - checkpoint: {checkpoint_object}")
