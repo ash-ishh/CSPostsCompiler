@@ -33,7 +33,8 @@ class Platform:
         self.rss_feed_url_mapping = {
             'openai': 'https://openai.com/blog/rss/',
             'deepmind': 'https://www.deepmind.com/blog/rss.xml',
-            'netflix': 'https://netflixtechblog.com/feed'
+            'netflix': 'https://netflixtechblog.com/feed',
+            'aws-architecture': 'https://aws.amazon.com/blogs/architecture/feed/'
         }
 
     def set_trimmed_feed(self):
@@ -61,7 +62,9 @@ class Platform:
             'deepmind': ['title', 'title_detail', 'summary', 'summary_detail', 'links', 'link', 'id', \
                          'guidislink', 'published', 'published_parsed', 'media_content', 'media_thumbnail', 'href'],
             'netflix': ['title', 'title_detail', 'links', 'link', 'id', 'guidislink', 'tags', 'authors', 'author', \
-                        'author_detail', 'published', 'published_parsed', 'updated', 'updated_parsed', 'content', 'summary']
+                        'author_detail', 'published', 'published_parsed', 'updated', 'updated_parsed', 'content', 'summary'],
+            'aws-architecture': ['title', 'title_detail', 'links', 'link', 'authors', 'author', 'author_detail', 'published', \
+                                 'published_parsed', 'tags', 'id', 'guidislink', 'summary', 'summary_detail', 'content']
         }
         required_fields = ['title', 'summary', 'link', 'published']
  

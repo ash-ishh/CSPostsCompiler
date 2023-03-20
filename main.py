@@ -4,7 +4,7 @@ from utils import get_checkpoint
 
 def main():
     checkpoint = get_checkpoint()
-    platforms = ['openai', 'deepmind', 'netflix']
+    platforms = ['openai', 'deepmind', 'netflix', 'aws-architecture']
     for platform in platforms:
         try:
             platform_instance = Platform(platform, checkpoint)

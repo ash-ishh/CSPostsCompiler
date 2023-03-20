@@ -8,12 +8,14 @@ CONSUMER_KEY = os.getenv("CONSUMER_KEY")
 CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
+BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 TESTING_MODE = os.getenv("TESTING_MODE")
 client = tweepy.Client(
     consumer_key=CONSUMER_KEY,
     consumer_secret=CONSUMER_SECRET,
     access_token=ACCESS_TOKEN,
-    access_token_secret=ACCESS_TOKEN_SECRET
+    access_token_secret=ACCESS_TOKEN_SECRET,
+    bearer_token=BEARER_TOKEN
 )
 
 class Twitter:
