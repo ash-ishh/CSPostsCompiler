@@ -1,0 +1,16 @@
+{
+    "prod": {
+        "app_function": "main.main",
+        "aws_region": "us-east-1",
+        "profile_name": "default",
+        "project_name": "cspostscompiler",
+        "runtime": "python3.9",
+        "s3_bucket": "zappa-cs-posts-compiler",
+        "apigateway_enabled": false,
+        "keep_warm": false,
+        "events": [{
+            "function": "main.main",
+            "expression": "rate(2 hours)"
+        }]
+    }
+}
