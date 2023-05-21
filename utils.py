@@ -2,6 +2,8 @@ import boto3
 import os
 import json
 
+import feedparser
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -18,6 +20,7 @@ if not CHECKPOINT_FILE_NAME:
     print("Populate .env with CHECKPOINT_FILE_NAME")
     exit(0)
 
+
 def get_checkpoint():
     s3_client = boto3.client("s3")
     checkpoint = s3_client.get_object(
@@ -26,6 +29,7 @@ def get_checkpoint():
     )
     checkpoint_object = json.loads(checkpoint['Body'].read())
     return checkpoint_object
+
 
 def set_checkpoint(checkpoint_object):
     if TESTING_MODE.lower() == 'false':
@@ -37,3 +41,10 @@ def set_checkpoint(checkpoint_object):
         )
     else:
         print(f"Testing mode on - checkpoint: {checkpoint_object}")
+
+
+def get_feed_fields(url):
+    feed = feedparser.parse(url)
+    if feed.entries:
+        first_entry = feed.entries[0]
+        return first_entry.keys()

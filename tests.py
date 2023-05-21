@@ -3,10 +3,12 @@ from posts import Platform, FeedParser
 from utils import get_checkpoint, set_checkpoint
 from main import main
 
+
 def test_update_status():
     text = "Hello World!"
     twitter = Twitter()
     twitter.update_status(text)
+
 
 def test_get_checkpoint():
     checkpoint = get_checkpoint()
@@ -34,20 +36,24 @@ def test_deepmind_feed():
     deepmind = Platform(platform_name, last_processed_date_string=last_processed_date)
     deepmind.process()
 
+
 def test_netflix_feed():
     platform_name = "netflix"
     netflix = Platform(platform_name)
     netflix.process()
+
 
 def test_aws_archtecture_feed():
     platform_name = "aws-architecture"
     aws_architecture = Platform(platform_name)
     aws_architecture.process()
 
+
 def test_zerodha_feed():
     platform_name = "zerodha"
     zerodha = Platform(platform_name)
     zerodha.process()
+
 
 def test_feed_headers():
     platform_name = "zerodha"
@@ -59,6 +65,7 @@ def test_feed_headers():
         print(headers)
     else:
         print("feed not found")
+
 
 def test_main():
     main()

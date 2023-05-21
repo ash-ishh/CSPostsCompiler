@@ -46,7 +46,8 @@ class Platform:
             'deepmind': 'https://www.deepmind.com/blog/rss.xml',
             'netflix': 'https://netflixtechblog.com/feed',
             'aws-architecture': 'https://aws.amazon.com/blogs/architecture/feed/',
-            'zerodha': 'https://zerodha.tech/index.xml'
+            'zerodha': 'https://zerodha.tech/index.xml',
+            'primevideo': 'https://www.primevideotech.com/our-innovation'
         }
         self.rss_feed_url = self.rss_feed_url_mapping[self.name]
 
@@ -94,7 +95,10 @@ class Platform:
                                  'summary_detail', 'content'],
             'zerodha': ['title', 'title_detail', 'links', 'link', 'published',
                         'published_parsed', 'id', 'guidislink', 'summary',
-                        'summary_detail']
+                        'summary_detail'],
+            'primevideo': ['title', 'title_detail', 'links', 'link', 'summary',
+                           'summary_detail', 'published', 'published_parsed',
+                           'id', 'guidislink']
         }
         # Required fields
         _ = ['title', 'summary', 'link', 'published']

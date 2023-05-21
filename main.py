@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     checkpoint = get_checkpoint()
-    platforms = ['openai', 'deepmind', 'netflix', 'aws-architecture', 'zerodha']
+    platforms = ['openai', 'deepmind', 'netflix', 'aws-architecture', 'zerodha', 'primevideo']
     for platform in platforms:
         try:
             platform_instance = Platform(platform, checkpoint)
