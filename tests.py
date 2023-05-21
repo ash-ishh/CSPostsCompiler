@@ -12,12 +12,14 @@ def test_get_checkpoint():
     checkpoint = get_checkpoint()
     print(checkpoint)
 
+
 def test_update_checkpoint():
     checkpoint = {
         "openai": "Thu, 09 Dec 2022 17:00:02 GMT",
         "deepmind": "Thu, 09 Dec 2022 17:00:02 GMT"
     }
     set_checkpoint(checkpoint)
+
 
 def test_open_ai_feed():
     platform_name = "openai"
@@ -65,9 +67,9 @@ def test_main():
 # test_checkpoint_object()
 # test_update_checkpoint()
 # test_get_checkpoint()
-# test_open_ai_feed()
+test_open_ai_feed()
 # test_deepmind_feed()
 # test_netflix_feed()
-test_zerodha_feed()
+# test_zerodha_feed()
 # test_feed_headers()
 # test_main()

@@ -55,13 +55,17 @@ class Platform:
         for entry in self.feed:
             trimmed_entry = {}
             trimmed_entry['title'] = entry.title
-            summary_soup = BeautifulSoup(entry.summary, 'html.parser')
-            if summary_soup.find():
-                summary_ps = summary_soup.find_all('p')
-                summary = '\n'.join([summary_p.get_text()
-                                    for summary_p in summary_ps])
-            else:
-                summary = entry.summary
+            try:
+                summary_soup = BeautifulSoup(entry.summary, 'html.parser')
+                if summary_soup.find():
+                    summary_ps = summary_soup.find_all('p')
+                    summary = '\n'.join([summary_p.get_text()
+                                        for summary_p in summary_ps])
+                else:
+                    summary = entry.summary
+            except AttributeError:
+                logger.error("summary missing from feed - setting as empty string")
+                summary = ""
             trimmed_entry['summary'] = summary
             trimmed_entry['link'] = entry.link
             trimmed_entry['published'] = entry.published
@@ -73,9 +77,8 @@ class Platform:
         # Available fields
         _ = {
             'openai': ['title', 'title_detail', 'summary', 'summary_detail',
-                       'links', 'link', 'id', 'guidislink', 'tags', 'authors',
-                       'author', 'author_detail', 'published',
-                       'published_parsed', 'media_content', 'content'],
+                       'links', 'link', 'id', 'guidislink', 'tags', 'published',
+                       'published_parsed'],
             'deepmind': ['title', 'title_detail', 'summary', 'summary_detail',
                          'links', 'link', 'id', 'guidislink', 'published',
                          'published_parsed', 'media_content',
@@ -105,7 +108,10 @@ class Platform:
         feed_parser_instance = FeedParser(url)
         self.feed = feed_parser_instance.fetch(self.last_processed_date)
         self.normalize_feed()
-        self.set_trimmed_feed()
+        try:
+            self.set_trimmed_feed()
+        except AttributeError:
+            logger.exception(f"Check below stack trace for {url} some attribute is missing")
 
     def format_entry(self, entry):
         link = entry['link'].strip()
