@@ -18,7 +18,7 @@ def main():
             platform_instance = Platform(platform, checkpoint)
             platform_instance.process()
         except Exception as e:
-            logger.execption(e)
+            logger.exception(e)
 
 
 if __name__ == "__main__":

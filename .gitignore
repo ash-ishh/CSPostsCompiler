@@ -3,3 +3,4 @@ venv
 .env
 zappa_settings.json
 .vscode
+*.zip
