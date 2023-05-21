@@ -22,12 +22,12 @@ jobs:
         cache: 'pip'
     - run: pip install -r requirements.txt
 
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+    - name: Configure AWS profile
+      run: |
+        aws configure set region us-east-1 --profile default
+        aws configure set output json --profile default
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile default
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile default
 
     - name: Zappa deployment
       run: zappa update prod
