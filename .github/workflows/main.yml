@@ -20,7 +20,9 @@ jobs:
       with:
         python-version: '3.9'
         cache: 'pipenv'
-    - run: pipenv install --dev
+    - run: |
+        pip install pipenv
+        pipenv install --dev
 
     - name: Configure AWS profile
       run: |
