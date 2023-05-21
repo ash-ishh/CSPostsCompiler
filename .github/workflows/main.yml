@@ -1,10 +1,9 @@
-name: main worfklow
+name: main workflow
 
 on:
   push:
     branches:
       - main
-
 
 jobs:
   build:
@@ -13,8 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-   - name: 'Create env file'
-     run: |
+    - name: 'Create env file'
+      run: |
        echo "${{ secrets.ENV_FILE }}" > .env
 
     - uses: actions/setup-python@v2
