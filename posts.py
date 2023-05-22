@@ -47,7 +47,7 @@ class Platform:
             'netflix': 'https://netflixtechblog.com/feed',
             'aws-architecture': 'https://aws.amazon.com/blogs/architecture/feed/',
             'zerodha': 'https://zerodha.tech/index.xml',
-            'primevideo': 'https://www.primevideotech.com/our-innovation'
+            'primevideo': 'https://www.primevideotech.com/our-innovation.rss'
         }
         self.rss_feed_url = self.rss_feed_url_mapping[self.name]
 
